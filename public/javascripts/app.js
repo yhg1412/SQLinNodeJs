@@ -1,36 +1,42 @@
 var app = angular.module('angularjsNodejsTutorial',[]);
-app.controller('myController', function($scope, $http) {
-    
-    $scope.Submit = function() {
-        $scope.data = [];
-        var request = $http.get('/sqlFuntion/' + $scope.email);
-        request.success(function(data) {
+app.controller('myController', function($scope, $http)
+{
+    $scope.message="";
+    $scope.Submit = function()
+    {
+        var request = $http.get('/data/'+$scope.email);
+        request.success(function(data)
+        {
             $scope.data = data;
         });
-        request.error(function(data){
-            console.log('Error: ' + data);
+        request.error(function(data)
+        {
+            console.log('err');
         });
     
-    //$window.location.href="/hello.html";
-    };
-    /*
-     $scope.Authenticate = function() {
-        var request = $http.get('/validate/'+$scope.user+'&'+$scope.password);
-        request.success(function (data) {
-            console.log("Back again in signUp Controller");
-            $scope.answer=data;
-           if(data[0].IsAdmin==1)
-            {
+    }; 
+});
 
-                //$location.path('/admin');
-                //$location.replace();
-                $window.location.href="/admin_recipe";
-            }
-            else
-               $window.location.href="/user/"+$scope.user;
+// To implement "Insert a new record", you need to:
+// - Create a new controller here
+// - Create a corresponding route handler in routes/index.js
+
+app.controller('insertController', function($scope, $http)
+{
+    $scope.message = "";
+    $scope.Insert = function()
+    {
+        var request = $http.get('/data/login/'+$scope.login+'/name/' + $scope.name +
+            '/sex/' + $scope.sex + '/RelationshipStatus/' + $scope.RelationshipStatus +
+            '/Birthyear/' + $scope.Birthyear);
+        request.success(function(data)
+        {
+            $scope.data = data;
+            console.log('insert returned data: ' + data);
         });
-        request.error(function (data) {
-            console.log('Error: ' + data);
+        request.error(function(data)
+        {
+            console.log('err');
         });
-    };*/
+    }
 });

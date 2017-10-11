@@ -91,8 +91,8 @@ router.get('/person/:name',
 
         var query = 'SELECT p.*, f.role as role ' +
             'FROM Person p JOIN Family f ' +
-            'ON p.login = f.login ' +
-            'WHERE p.login = "' + name + '"';
+            'ON p.login = f.member ' +
+            'WHERE f.login = "' + name + '"';
         connection.query(query, function(err, rows, fields) {
             if (err) console.log(err);
             else {

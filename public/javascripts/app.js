@@ -40,3 +40,34 @@ app.controller('insertController', function($scope, $http)
         });
     }
 });
+
+app.controller('familyController', function($scope, $http)
+{
+    $scope.message = "";
+    $scope.Family = function()
+    {
+        var request = $http.get('/person/'+$scope.name);
+        request.success(function(data)
+        {
+            $scope.data = data;
+            console.log('insert returned data: ' + data);
+        });
+        request.error(function(data)
+        {
+            console.log('err');
+        });
+    }
+    $scope.DropDown = function()
+    {
+        var request = $http.get('/personDropDown');
+        request.success(function(datadrop)
+        {
+            $scope.datadrop = datadrop;
+            console.log('drop down data: ' + datadrop);
+        });
+        request.error(function(data)
+        {
+            console.log('err');
+        });
+    }
+});

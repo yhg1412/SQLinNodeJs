@@ -24,6 +24,10 @@ router.get('/insert', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'insert.html'));
 });
 
+router.get('/family', function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../', 'views', 'family.html'));
+});
+
 router.get('/data/:email', function(req,res) {
   // use console.log() as print() in case you want to debug, example below:
   // console.log("inside person email");
@@ -79,5 +83,38 @@ router.get('/data/login/:login/name/:name/sex/:sex/RelationshipStatus/:Relations
       }
   });
 })
+
+router.get('/person/:name',
+    function(req,res) {
+        var name = req.params.name;
+        console.log("family name = " + name);
+
+        var query = 'SELECT p.*, f.role as role ' +
+            'FROM Person p JOIN Family f ' +
+            'ON p.login = f.login ' +
+            'WHERE p.login = "' + name + '"';
+        connection.query(query, function(err, rows, fields) {
+            if (err) console.log(err);
+            else {
+                res.json(rows);
+            }
+        });
+    })
+
+router.get('/personDropDown',
+    function(req,res) {
+
+        console.log("Drop down menu hit");
+
+        var query = 'SELECT DISTINCT f.login ' +
+            'FROM Family f ';
+        connection.query(query, function(err, rows, fields) {
+            if (err) console.log(err);
+            else {
+                console.log(rows);
+                res.json(rows);
+            }
+        });
+    })
 
 module.exports = router;
